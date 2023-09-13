@@ -1,0 +1,43 @@
+plugins {
+    id "java"
+}
+
+defaultTasks 'clean', 'test'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'com.codeborne:selenide-testng:6.18.0'
+    testImplementation 'org.seleniumhq.selenium:selenium-safari-driver:4.8.2'
+    testImplementation 'org.testng:testng:7.4.0'
+    testRuntimeOnly 'org.slf4j:slf4j-simple:2.0.9'
+}
+
+tasks.withType(Test) {
+    useTestNG {
+        includeGroups 'ui'
+    }
+}
+
+task chrome(type: Test) {
+    systemProperties['selenide.browser'] = 'chrome'
+    systemProperties['selenide.headless'] = 'true'
+}
+
+task firefox(type: Test) {
+    systemProperties['selenide.browser'] = 'firefox'
+    systemProperties['selenide.headless'] = 'true'
+}
+
+task safari(type: Test) {
+    systemProperties['selenide.browser'] = 'safari'
+}
+
+task ageVerifier(type: Test) {
+    useTestNG() {
+        includeGroups 'unit'
+        excludeGroups 'ui'
+    }
+}
