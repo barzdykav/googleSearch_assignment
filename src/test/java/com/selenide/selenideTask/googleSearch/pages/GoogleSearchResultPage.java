@@ -2,14 +2,15 @@ package com.selenide.selenideTask.googleSearch.pages;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+
+import static com.codeborne.selenide.CollectionCondition.size;
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThan;
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.*;
 
 public class GoogleSearchResultPage {
-    private final ElementsCollection results = $$("#search .g");
-    private final SelenideElement googleLogo = $("img[alt='Google']");
+    private ElementsCollection results = $$("#search .g");
+    private SelenideElement googleLogo = $("img[alt='Google']");
 
     public GoogleSearchPage clickOnGoogleLogo() {
         googleLogo.click();
@@ -18,6 +19,11 @@ public class GoogleSearchResultPage {
 
     public GoogleSearchResultPage checkResultsSizeIsAtLeast(int expectedSize) {
         results.shouldHave(sizeGreaterThan(expectedSize));
+        return this;
+    }
+
+    public GoogleSearchResultPage checkResultsSizeIs(int expectedSize) {
+        results.shouldHave(size(expectedSize));
         return this;
     }
 

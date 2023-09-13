@@ -4,11 +4,12 @@ import com.selenide.selenideTask.ageVerifier.AgeVerifier;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import java.time.LocalDate;
 
 public class AgeVerifierTest {
 
-    @Test(dataProvider = "ageTestData", groups ={"unit"})
+    @Test(dataProvider = "ageTestData", groups = {"unit"})
     public void testIsUserOver18(LocalDate dateOfBirth, boolean expectedResult) {
         boolean result = AgeVerifier.isUserOver18(dateOfBirth);
         Assert.assertEquals(result, expectedResult);
