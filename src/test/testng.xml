@@ -1,8 +1,0 @@
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Google Search Suite">
-    <test name="Google Search Test">
-        <classes>
-            <class name="com.selenide.selenideTask.googleSearch.tests.GoogleSearchTest"/>
-        </classes>
-    </test>
-</suite>
