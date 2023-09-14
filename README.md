@@ -1,6 +1,10 @@
 # googleSearch_assignment
 
-### How to run using Gradle:
+### Run unit tests for checking if the user is over 18 years old:
+
+      ./gradlew ageVerifier
+
+### Run Selenide UI tests for Google search:
 
       ./gradlew chrome
       ./gradlew safari
