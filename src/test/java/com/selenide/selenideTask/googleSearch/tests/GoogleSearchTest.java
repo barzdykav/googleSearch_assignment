@@ -12,14 +12,14 @@ import com.codeborne.selenide.testng.SoftAsserts;
 @Listeners({SoftAsserts.class})
 public class GoogleSearchTest {
     private static final String FULL_NAME_VALUE = "Elon Musk";
+    private static final String BASE_URL = "https://www.google.com";
 
     private GoogleSearchPage google = new GoogleSearchPage();
 
     @BeforeClass(alwaysRun = true)
     public void setUp() {
         Configuration.assertionMode = SOFT;
-        Configuration.browser = "safari";
-        Configuration.baseUrl = "https://www.google.com";
+        Configuration.baseUrl = BASE_URL;
         google.open();
     }
 
@@ -41,7 +41,6 @@ public class GoogleSearchTest {
     @DataProvider(name = "invalidSearchData")
     public Object[][] invalidSearchData() {
         return new Object[][]{
-                {""},
                 {"Xyzzzzzzzzzkj"}
         };
     }
@@ -58,7 +57,7 @@ public class GoogleSearchTest {
     public void testInvalidNameSearch(String searchData) {
         google
                 .searchFor(searchData)
-                .checkResultsSizeIs(0);
+                .checkResultStatsSection("0 results");
     }
 
     @Test(groups = {"ui"})

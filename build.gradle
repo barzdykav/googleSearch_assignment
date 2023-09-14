@@ -2,6 +2,13 @@ plugins {
     id "java"
 }
 
+ext {
+    selenideVersion = '6.18.0'
+    seleniumVersion = '4.8.2'
+    testngVersion = '7.4.0'
+    slf4jVersion = '2.0.9'
+}
+
 defaultTasks 'clean', 'test'
 
 repositories {
@@ -9,10 +16,18 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'com.codeborne:selenide-testng:6.18.0'
-    testImplementation 'org.seleniumhq.selenium:selenium-safari-driver:4.8.2'
-    testImplementation 'org.testng:testng:7.4.0'
-    testRuntimeOnly 'org.slf4j:slf4j-simple:2.0.9'
+    testImplementation("com.codeborne:selenide-testng:${selenideVersion}")
+    testImplementation("org.seleniumhq.selenium:selenium-safari-driver:${seleniumVersion}")
+    testImplementation("org.testng:testng:${testngVersion}")
+    testRuntimeOnly("org.slf4j:slf4j-simple:${slf4jVersion}")
+}
+
+def browsers = ['chrome', 'safari', 'firefox']
+
+browsers.each { browser ->
+    task "${browser}Test"(type: Test) {
+        systemProperties['selenide.browser'] = browser
+    }
 }
 
 tasks.withType(Test) {
@@ -21,22 +36,8 @@ tasks.withType(Test) {
     }
 }
 
-task chrome(type: Test) {
-    systemProperties['selenide.browser'] = 'chrome'
-    systemProperties['selenide.headless'] = 'true'
-}
-
-task firefox(type: Test) {
-    systemProperties['selenide.browser'] = 'firefox'
-    systemProperties['selenide.headless'] = 'true'
-}
-
-task safari(type: Test) {
-    systemProperties['selenide.browser'] = 'safari'
-}
-
 task ageVerifier(type: Test) {
-    useTestNG() {
+    useTestNG {
         includeGroups 'unit'
         excludeGroups 'ui'
     }
